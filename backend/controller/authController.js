@@ -31,7 +31,7 @@ exports.createUser = asyncHanlder(async (req, res, next) => {
             name: user.name,
             email: user.email,
             pic: user.pic,
-            token : generateToken()
+            token : generateToken(user._id)
         });
     } else {
         res.status(400);
@@ -42,7 +42,7 @@ exports.createUser = asyncHanlder(async (req, res, next) => {
 
 
 exports.login = asyncHanlder(async (req, res, next) => {
-    
+    console.log(req.get('Authorization'));
     const { email, password } = req.body;
     if (!email || !password) {
         res.status(400);
