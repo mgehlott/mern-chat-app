@@ -4,7 +4,7 @@ const User = require('../Models/User');
 const generateToken = require('../config/genarateToken');
 
 exports.createUser = asyncHanlder(async (req, res, next) => {
-     
+
     const { name, email, password, pic } = req.body;
     if (!name || !email || !password) {
         res.status(400);
@@ -31,7 +31,7 @@ exports.createUser = asyncHanlder(async (req, res, next) => {
             name: user.name,
             email: user.email,
             pic: user.pic,
-            token : generateToken(user._id)
+            token: generateToken(user._id)
         });
     } else {
         res.status(400);
@@ -52,12 +52,13 @@ exports.login = asyncHanlder(async (req, res, next) => {
     const user = await User.findOne({ email });
     const isPassSame = await user.matchPassword(password);
     console.log('is Same', isPassSame);
-    if (user && isPassSame ) {
+    if (user && isPassSame) {
         res.status(200).json({
             message: 'Logged in',
             _id: user._id,
             name: user.name,
-            email: user.email
+            email: user.email,
+            token: generateToken(user._id)
         });
     } else {
         res.status(402);

@@ -3,16 +3,17 @@ const asyncHanlder = require('express-async-handler');
 const User = require('../Models/User');
 
 const checkAuth = asyncHanlder(async (req, res, next) => {
-     
+    console.log('token', req.headers.authorization);
     let token;
-   
+
     if (req.headers.authorization &&
         req.headers.authorization.startsWith("Bearer")) {
         try {
-          
-             token = req.headers.authorization.split(' ')[1];
+
+            token = req.headers.authorization.split(' ')[1];
+
             const decodedToeken = jwt.verify(token, 'mahendrasuperduperkey');
-            console.log(decodedToeken);
+            console.log("decodedToeken");
             req.user = await User.findById(decodedToeken.id).select('-password');
             next();
         } catch (err) {
@@ -27,4 +28,4 @@ const checkAuth = asyncHanlder(async (req, res, next) => {
     }
 });
 
-module.exports = {checkAuth}
+module.exports = { checkAuth }

@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const chatContext = React.createContext();
 
 const ChatProvider = ({ children }) => {
     const [user, setUser] = useState();
+    const [selectedChat, setSelectedChat] = useState();
+    const [chats, setChats] = useState([]);
     const navigate = useNavigate();
+
+    const chatChangeHandler = (chatss) => {
+
+        setChats(chatss);
+
+    }
 
     useEffect(() => {
         const userInfo = localStorage.getItem('userInfo');
@@ -12,11 +20,20 @@ const ChatProvider = ({ children }) => {
         if (!userInfo) {
             navigate('/');
         }
-    },[navigate]);
+    }, [navigate]);
 
-    return <chatContext.Provider value={{user,setUser}}>
-        {children}
+    return <chatContext.Provider value={
+        {
+            user,
+            setUser,
+            selectedChat,
+            setSelectedChat,
+            chats,
+            chatChangeHandler
+        }
+    }>
+        { children }
     </chatContext.Provider>
 }
 
-export default ChatProvider;
+export { ChatProvider, chatContext };
