@@ -4,8 +4,9 @@ import { useToast, Box, Button, Text, Spinner, Stack } from '@chakra-ui/react';
 import axios from 'axios';
 import { AiOutlinePlus } from 'react-icons/ai'
 import { getSender } from '../config/chatLogic';
+import GroupChatModel from './ui/GroupChatModel';
 
-function MyChats() {
+function MyChats({ fetchAgain }) {
 
   const { selectedChat, setSelectedChat, chats, chatChangeHandler, user
   } = useContext(chatContext);
@@ -35,14 +36,14 @@ function MyChats() {
         position: 'top'
       });
     }
-  }, [chatChangeHandler]);
+  }, [chatChangeHandler,]);
 
   useEffect(() => {
     console.log('effffect');
     setLoggedUser(JSON.parse(localStorage.getItem('userInfo')));
     fetchChats();
     // console.log('chats', chats);
-  }, []);
+  }, [fetchAgain]);
 
   return (
     <Box
@@ -65,13 +66,15 @@ function MyChats() {
         alignItems='center'
       >
         My Chats
-        <Button
-          display='flex'
-          fontSize={ { base: '17px', md: '10px', lg: '20px' } }
-          rightIcon={ <AiOutlinePlus /> }
-        >
-          New Group Chat
-        </Button>
+        <GroupChatModel>
+          <Button
+            display='flex'
+            fontSize={ { base: '17px', md: '10px', lg: '20px' } }
+            rightIcon={ <AiOutlinePlus /> }
+          >
+            New Group Chat
+          </Button>
+        </GroupChatModel>
 
       </Box>
       <Box

@@ -15,7 +15,7 @@ function SideDrawer() {
     const [searchResult, setSearchResult] = useState([]);
     const [loading, setLoading] = useState(false);
     const [loadingChat, setLoadingChat] = useState(false);
-    const { user, setSelectedChat, chats, setChats } = useContext(chatContext);
+    const { user, setSelectedChat, chats, chatChangeHandler } = useContext(chatContext);
     const navigate = useNavigate();
     const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -60,7 +60,7 @@ function SideDrawer() {
 
     }
 
-    const accessChat = (userId) => {
+    const accessChat = async (userId) => {
         try {
             setLoadingChat(true);
             //   console.log('indise acceschat');
@@ -71,9 +71,11 @@ function SideDrawer() {
                 }
             }
 
-            const { data } = axios.post('http://localhost:5000/api/chat', { userId }, config);
+
+            const { data } = await axios.post('http://localhost:5000/api/chat', { userId }, config);
+            console.log('dadta is ', data);
             if (!chats.find(c => c._id === data._id)) {
-                setChats([data, ...chats]);
+                chatChangeHandler([data, ...chats]);
             }
             setSelectedChat(data);
             setLoadingChat(false);

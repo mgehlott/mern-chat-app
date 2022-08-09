@@ -9,11 +9,14 @@ function ProfileModal({ user, children }) {
         <>{
             children ? (<span onClick={ onOpen } >{ children }</span>) :
                 (
-                    <IconButton
-                        display={ { base: 'flex' } }
-                        icon={ <AiFillEye /> }
-                        onClick={ onOpen }
-                    />
+                    <>
+
+                        <IconButton
+                            display='flex'
+                            icon={ <AiFillEye /> }
+                            onClick={ onOpen }
+                        />
+                    </>
                 )
         }
 
