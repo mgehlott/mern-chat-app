@@ -42,7 +42,8 @@ exports.createUser = asyncHanlder(async (req, res, next) => {
 
 
 exports.login = asyncHanlder(async (req, res, next) => {
-    console.log(req.get('Authorization'));
+    //    console.log(req);
+    //   console.log(req.get('Authorization'));
     const { email, password } = req.body;
     if (!email || !password) {
         res.status(400);
@@ -50,6 +51,8 @@ exports.login = asyncHanlder(async (req, res, next) => {
     }
 
     const user = await User.findOne({ email });
+
+    console.log(user);
     const isPassSame = await user.matchPassword(password);
     console.log('is Same', isPassSame);
     if (user && isPassSame) {

@@ -3,7 +3,8 @@ const asyncHanlder = require('express-async-handler');
 const User = require('../Models/User');
 
 const checkAuth = asyncHanlder(async (req, res, next) => {
-    console.log('token', req.headers.authorization);
+    console.log('toekn');
+    console.log('token is', req.headers.authorization);
     let token;
 
     if (req.headers.authorization &&
