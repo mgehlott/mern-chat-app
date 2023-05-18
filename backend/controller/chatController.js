@@ -31,7 +31,7 @@ exports.accessChat = asyncHandler(async (req, res, next) => {
         const chatData = {
             chatName: 'sender',
             isGroupChat: false,
-            users: [req.user._id, userId]
+            users: [ req.user._id, userId ]
         };
 
         try {
@@ -47,8 +47,6 @@ exports.accessChat = asyncHandler(async (req, res, next) => {
 
 
 });
-
-
 
 exports.getChats = asyncHandler(async (req, res, next) => {
 

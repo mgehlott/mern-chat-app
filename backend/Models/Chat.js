@@ -8,20 +8,20 @@ const chatSchema = Schema({
     },
     isGroupChat: {
         type: Boolean,
-        default:false
+        default: false
     },
-    users: [{
+    users: [ {
         type: Schema.Types.ObjectId,
-        ref:'User'
-    }],
+        ref: 'User'
+    } ],
     latestMessage: {
         type: Schema.Types.ObjectId,
-        ref:'Message'
+        ref: 'Message'
     },
 
     groupAdmin: {
         type: Schema.Types.ObjectId,
-        ref:'User'
+        ref: 'User'
     }
 }, {
     timestamps: true

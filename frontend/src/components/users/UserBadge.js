@@ -6,6 +6,7 @@ const UserBadge = ({ user, handleDelete }) => {
     return (
         <Box
             px={ 2 }
+            key={ user.id }
             display='flex'
             justifyContent='space-between'
             alignItems='center'

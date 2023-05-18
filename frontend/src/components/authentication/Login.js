@@ -8,10 +8,10 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [show, setShow] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [ email, setEmail ] = useState("");
+    const [ password, setPassword ] = useState("");
+    const [ show, setShow ] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(false);
     const toast = useToast();
     const navigate = useNavigate();
 
@@ -45,7 +45,6 @@ function Login() {
             const config = {
                 headers: {
                     "Content-type": "application/json",
-
                 },
             }
 

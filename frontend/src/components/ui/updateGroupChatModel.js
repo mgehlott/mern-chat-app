@@ -7,7 +7,7 @@ import axios from 'axios';
 import ChatLoading from './ChatLoading';
 import UserListItem from '../users/UserListItem';
 
-const UpdateGroupChatModel = ({ fechAgain, setFetchAgain }) => {
+const UpdateGroupChatModel = ({ fechAgain, setFetchAgain, fetchMessagge }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { user, selectedChat, setSelectedChat } = useContext(chatContext);
@@ -96,6 +96,7 @@ const UpdateGroupChatModel = ({ fechAgain, setFetchAgain }) => {
                 config
             );
             user1._id === userData._id ? selectedChat() : setSelectedChat(data);
+            fetchMessagge();
             setFetchAgain(!fechAgain);
             setLoading(false);
         } catch (e) {
@@ -113,7 +114,7 @@ const UpdateGroupChatModel = ({ fechAgain, setFetchAgain }) => {
 
     }
     const handleRename = async () => {
-        console.log(userData.token);
+        // console.log(userData.token);
         if (!groupChatName) {
             return;
         }
@@ -205,7 +206,7 @@ const UpdateGroupChatModel = ({ fechAgain, setFetchAgain }) => {
                             p={ 3 }
                         >
                             { selectedChat.users.map(u => <UserBadge
-                                key={ u.id }
+                                key={ u._id }
                                 user={ u }
                                 handleDelete={ () => handleRemove(u) }
                             />) }

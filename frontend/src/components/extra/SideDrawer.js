@@ -11,10 +11,10 @@ import ChatLoading from '../ui/ChatLoading';
 import UserListItem from '../users/UserListItem';
 
 function SideDrawer() {
-    const [search, setSearch] = useState("");
-    const [searchResult, setSearchResult] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [loadingChat, setLoadingChat] = useState(false);
+    const [ search, setSearch ] = useState("");
+    const [ searchResult, setSearchResult ] = useState([]);
+    const [ loading, setLoading ] = useState(false);
+    const [ loadingChat, setLoadingChat ] = useState(false);
     const { user, setSelectedChat, chats, chatChangeHandler } = useContext(chatContext);
     const navigate = useNavigate();
     const toast = useToast();
@@ -64,6 +64,7 @@ function SideDrawer() {
         try {
             setLoadingChat(true);
             //   console.log('indise acceschat');
+            console.log(userId, userData);
             const config = {
                 headers: {
                     'Content-type': 'application/json',
@@ -75,7 +76,7 @@ function SideDrawer() {
             const { data } = await axios.post('http://localhost:5000/api/chat', { userId }, config);
             console.log('dadta is ', data);
             if (!chats.find(c => c._id === data._id)) {
-                chatChangeHandler([data, ...chats]);
+                chatChangeHandler([ data, ...chats ]);
             }
             setSelectedChat(data);
             setLoadingChat(false);

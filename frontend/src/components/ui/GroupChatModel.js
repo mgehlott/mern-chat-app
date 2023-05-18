@@ -7,16 +7,17 @@ import UserListItem from '../users/UserListItem';
 
 const GroupChatModel = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [groupChatName, setGroupChatName] = useState("");
-    const [selectedUsers, setSelectedUsers] = useState([]);
-    const [search, setSearch] = useState("");
-    const [searchResult, setSearchResult] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [ groupChatName, setGroupChatName ] = useState("");
+    const [ selectedUsers, setSelectedUsers ] = useState([]);
+    const [ search, setSearch ] = useState("");
+    const [ searchResult, setSearchResult ] = useState([]);
+    const [ loading, setLoading ] = useState(false);
     const toast = useToast();
     const { user, chats, chatChangeHandler } = useContext(chatContext);
     const userData = JSON.parse(user);
     const handleSearch = async (e) => {
         const query = e.target.value;
+        console.log("debounce");
         setSearch(query);
         if (!query) {
             return;
@@ -31,11 +32,9 @@ const GroupChatModel = ({ children }) => {
             const { data } = await axios.get(`http://localhost:5000/api/users/?search=${query}`,
                 config
             );
-            console.log('searched', data);
+            //  console.log('searched', data);
             setLoading(false);
             setSearchResult(data);
-
-
         } catch (error) {
             toast({
                 title: 'Error in fetching user !!',
@@ -69,7 +68,7 @@ const GroupChatModel = ({ children }) => {
                 name: groupChatName,
                 users: JSON.stringify(selectedUsers.map(u => u._id))
             }, config);
-            chatChangeHandler([data, ...chats]);
+            chatChangeHandler([ data, ...chats ]);
             onClose();
             toast({
                 title: 'New Group Chat is Created',
@@ -101,7 +100,7 @@ const GroupChatModel = ({ children }) => {
             return;
         }
         setSelectedUsers(pre => {
-            return [...pre, userToAdd];
+            return [ ...pre, userToAdd ];
         })
     }
     const handleDelete = (userToDelete) => {
@@ -128,7 +127,7 @@ const GroupChatModel = ({ children }) => {
                         <FormControl id='groupname' isRequired >
 
                             <Input
-                                placeholder='Enter Your Email'
+                                placeholder='Enter Your Group Name'
                                 mb={ 3 }
                                 value={ groupChatName }
                                 onChange={ (e) => setGroupChatName(e.target.value) }

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { chatContext } from '../context/chatProvider';
 import { useToast, Box, Button, Text, Spinner, Stack } from '@chakra-ui/react';
 import axios from 'axios';
@@ -7,15 +7,17 @@ import { getSender } from '../config/chatLogic';
 import GroupChatModel from './ui/GroupChatModel';
 
 function MyChats({ fetchAgain }) {
-
+  console.log('my chats');
   const { selectedChat, setSelectedChat, chats, chatChangeHandler, user
   } = useContext(chatContext);
-  const [loggedUser, setLoggedUser] = useState();
   const toast = useToast();
   const userData = JSON.parse(user);
+  console.log(userData);
+  const [ loggedUser, setLoggedUser ] = useState(userData._id);
+  console.log('chats', chats);
 
-  const fetchChats = useCallback(async () => {
-    //  console.log('fecth');
+  const fetchChats = async () => {
+    console.log('fecth');
     try {
       const config = {
         headers: {
@@ -23,7 +25,7 @@ function MyChats({ fetchAgain }) {
         }
       };
       const { data } = await axios.get('http://localhost:5000/api/chat', config);
-      // console.log('data sisd :  ', data);
+      console.log('data sisd :  ', data);
       chatChangeHandler(data);
 
     } catch (error) {
@@ -36,14 +38,16 @@ function MyChats({ fetchAgain }) {
         position: 'top'
       });
     }
-  }, [chatChangeHandler,]);
+  };
 
   useEffect(() => {
     console.log('effffect');
-    setLoggedUser(JSON.parse(localStorage.getItem('userInfo')));
+    const uInfo = JSON.parse(localStorage.getItem('userInfo'));
+    console.log("uninof is ", uInfo);
+    setLoggedUser(uInfo);
     fetchChats();
-    // console.log('chats', chats);
-  }, [fetchAgain]);
+    console.log('chats', chats);
+  }, [ fetchAgain ]);
 
   return (
     <Box
@@ -91,7 +95,7 @@ function MyChats({ fetchAgain }) {
           (
             <Stack>
               { chats.map((chat) => {
-
+                console.log('cccc', chat.users);
                 return <Box
                   onClick={ () => setSelectedChat(chat) }
                   cursor='pointer'
@@ -112,7 +116,7 @@ function MyChats({ fetchAgain }) {
               }) }
             </Stack>
           ) :
-          (<Spinner size='md' />) }
+          'Please Start chat' }
       </Box>
     </Box>
   )
